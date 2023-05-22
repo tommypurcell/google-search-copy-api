@@ -1,8 +1,12 @@
 // import database
 const { MongoClient } = require('mongodb')
+require('dotenv').config() // Load environment variables from .env file
+
 const client = new MongoClient(
-  'mongodb+srv://googlesearch:googlesearchpassword@results.1ophbnm.mongodb.net/test'
+  // connect database through .env
+  process.env.DATABASE_CONNECTION
 )
+
 const db = client.db('google-search')
 const Results = db.collection('results')
 
@@ -41,6 +45,6 @@ app.get('/results', async (req, res) => {
   }
 })
 
-app.listen(4000, () => {
-  console.log('Server is Listening.')
+app.listen(process.env.PORT || 4000, () => {
+  console.log('Server is Listening on ' + process.env.PORT)
 })
